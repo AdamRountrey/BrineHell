@@ -18,9 +18,12 @@ body,
 
 body {
   overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 canvas {
   display: block;
   outline: none;
+  touch-action: none;
 }

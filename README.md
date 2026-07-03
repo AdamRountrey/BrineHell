@@ -18,8 +18,10 @@ Brine Hell is a browser-based vertical scrolling bullet hell built with Phaser 3
 ## Controls
 
 - `Arrow keys` or `WASD`: Swim
+- Mobile/touch: Drag to swim
 - Auto-fire is always on
 - `B`: Whirlpool bomb
+- Mobile/touch: Tap the on-screen bomb button
 - `P`: Pause
 - `M`: Mute or unmute music
 - `Enter`: Continue from checkpoint

@@ -113,6 +113,9 @@ export class GameScene extends Phaser.Scene {
   private activeBgKey = BIOME_BG_KEYS.shallows;
   private messageText!: Phaser.GameObjects.Text;
   private pauseText!: Phaser.GameObjects.Text;
+  private mobileBombButton: Phaser.GameObjects.Container | null = null;
+  private mobileBombButtonBg: Phaser.GameObjects.Arc | null = null;
+  private mobileBombButtonText: Phaser.GameObjects.Text | null = null;
 
   private playerBullets!: ObjectPool<Bullet>;
   private enemyBullets!: ObjectPool<Bullet>;
@@ -151,6 +154,11 @@ export class GameScene extends Phaser.Scene {
   private won = false;
   private pausedByPlayer = false;
   private autoplay = false;
+  private mobileControls = false;
+  private touchActive = false;
+  private touchPointerId = -1;
+  private touchTargetX = GAME_W / 2;
+  private touchTargetY = PLAYER_Y;
 
   private readonly stacks: Record<PowerupId, number> = {
     spread: 0,
@@ -176,6 +184,7 @@ export class GameScene extends Phaser.Scene {
 
     const save = data.continueFromSave ? loadSave() : null;
     this.autoplay = import.meta.env.DEV && new URLSearchParams(window.location.search).has('autoplay');
+    this.mobileControls = this.detectMobileControls();
     this.resetRunState(save?.unlockedPowerups ?? [], save?.powerupStacks, save?.timedPowerups, save?.loopLevel ?? 1);
     this.elapsed = save?.checkpointTime ?? 0;
     this.score = save?.score ?? 0;
@@ -188,6 +197,7 @@ export class GameScene extends Phaser.Scene {
     this.createPlayer();
     this.createInput();
     this.createOverlay();
+    this.createMobileControls();
 
     this.scene.launch('HudScene');
     reggaeMidi.start('game');
@@ -271,6 +281,7 @@ export class GameScene extends Phaser.Scene {
     this.updateBiomeAndCheckpoint();
     this.updateBackground();
     this.updatePlayer(dt);
+    this.updateMobileControls();
     this.updateFriendlyShark(dt);
     this.updateShooting(dt);
     this.updateWaveScheduler();
@@ -390,8 +401,99 @@ export class GameScene extends Phaser.Scene {
     this.keys.B.on('down', () => this.useBomb());
     this.input.keyboard!.on('keydown-M', () => reggaeMidi.toggleMute());
     this.input.mouse?.disableContextMenu();
-    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => this.handleBossPointer(pointer, false));
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => this.handleBossPointer(pointer, true));
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      if (this.handleMobilePointerDown(pointer)) return;
+      this.handleBossPointer(pointer, true);
+    });
+    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+      if (this.handleMobilePointerMove(pointer)) return;
+      this.handleBossPointer(pointer, false);
+    });
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => this.handleMobilePointerUp(pointer));
+  }
+
+  private detectMobileControls(): boolean {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('mobileControls')) return true;
+    return navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches;
+  }
+
+  private createMobileControls(): void {
+    if (!this.mobileControls) return;
+
+    const bg = this.add.circle(0, 0, 42, 0x2a0f3f, 0.74).setStrokeStyle(4, 0xf5d0ff, 0.9);
+    const label = this.add
+      .text(0, -2, 'BOMB', {
+        fontFamily: 'Arial Black, Impact, sans-serif',
+        fontSize: '15px',
+        color: '#ffffff',
+        stroke: '#18051f',
+        strokeThickness: 4
+      })
+      .setOrigin(0.5);
+    this.mobileBombButton = this.add.container(GAME_W - 72, GAME_H - 96, [bg, label]).setDepth(180);
+    this.mobileBombButtonBg = bg;
+    this.mobileBombButtonText = label;
+    this.mobileBombButton.setSize(96, 96).setInteractive(new Phaser.Geom.Rectangle(-48, -48, 96, 96), Phaser.Geom.Rectangle.Contains);
+    this.mobileBombButton.on('pointerdown', (_pointer: Phaser.Input.Pointer, _x: number, _y: number, event: Phaser.Types.Input.EventData) => {
+      event.stopPropagation();
+      this.useBomb();
+      this.pulseMobileBombButton();
+    });
+
+    this.add
+      .text(GAME_W / 2, GAME_H - 26, 'Drag to swim', {
+        fontSize: '16px',
+        color: '#d9fbff',
+        stroke: '#03192d',
+        strokeThickness: 3
+      })
+      .setOrigin(0.5)
+      .setAlpha(0.72)
+      .setDepth(160);
+  }
+
+  private handleMobilePointerDown(pointer: Phaser.Input.Pointer): boolean {
+    if (!this.mobileControls || this.autoplay || this.gameOver || this.won || this.pausedByPlayer) return false;
+    if (this.isBombButtonPoint(pointer.worldX, pointer.worldY)) {
+      this.useBomb();
+      this.pulseMobileBombButton();
+      return true;
+    }
+
+    this.touchActive = true;
+    this.touchPointerId = pointer.id;
+    this.setTouchTarget(pointer.worldX, pointer.worldY);
+    return true;
+  }
+
+  private handleMobilePointerMove(pointer: Phaser.Input.Pointer): boolean {
+    if (!this.mobileControls || !this.touchActive || pointer.id !== this.touchPointerId) return false;
+    this.setTouchTarget(pointer.worldX, pointer.worldY);
+    return true;
+  }
+
+  private handleMobilePointerUp(pointer: Phaser.Input.Pointer): void {
+    if (!this.touchActive || pointer.id !== this.touchPointerId) return;
+    this.touchActive = false;
+    this.touchPointerId = -1;
+  }
+
+  private setTouchTarget(x: number, y: number): void {
+    this.touchTargetX = Phaser.Math.Clamp(x, 34, GAME_W - 34);
+    this.touchTargetY = Phaser.Math.Clamp(y, 92, GAME_H - 42);
+  }
+
+  private isBombButtonPoint(x: number, y: number): boolean {
+    if (!this.mobileBombButton?.visible) return false;
+    return Phaser.Math.Distance.Between(x, y, this.mobileBombButton.x, this.mobileBombButton.y) <= 56;
+  }
+
+  private pulseMobileBombButton(): void {
+    if (!this.mobileBombButton) return;
+    this.tweens.killTweensOf(this.mobileBombButton);
+    this.mobileBombButton.setScale(0.86);
+    this.tweens.add({ targets: this.mobileBombButton, scale: 1, duration: 130, ease: 'Back.easeOut' });
   }
 
   private createOverlay(): void {
@@ -508,6 +610,8 @@ export class GameScene extends Phaser.Scene {
     const speed = 300 + this.stacks.speed * 45;
     if (this.autoplay) {
       this.updateAutoplayPlayer(dt, speed);
+    } else if (this.mobileControls && this.touchActive) {
+      this.updateTouchPlayer(dt, speed);
     } else {
       const left = this.cursors.left?.isDown || this.keys.A.isDown;
       const right = this.cursors.right?.isDown || this.keys.D.isDown;
@@ -529,6 +633,27 @@ export class GameScene extends Phaser.Scene {
         helper.setPosition(this.player.x + Math.cos(angle) * 58, this.player.y + Math.sin(angle) * 20);
       }
     });
+  }
+
+  private updateTouchPlayer(dt: number, speed: number): void {
+    const dx = this.touchTargetX - this.player.x;
+    const dy = this.touchTargetY - this.player.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance <= 1) return;
+    const step = Math.min(distance, speed * 1.85 * dt);
+    this.player.x = Phaser.Math.Clamp(this.player.x + (dx / distance) * step, 34, GAME_W - 34);
+    this.player.y = Phaser.Math.Clamp(this.player.y + (dy / distance) * step, 92, GAME_H - 42);
+  }
+
+  private updateMobileControls(): void {
+    if (!this.mobileBombButton || !this.mobileBombButtonBg || !this.mobileBombButtonText) return;
+    const usable = this.stacks.bomb > 0 && this.bombTimer <= 0 && !this.gameOver && !this.won;
+    this.mobileBombButton.setVisible(this.mobileControls);
+    this.mobileBombButtonBg.setFillStyle(usable ? 0x6420a6 : 0x263447, usable ? 0.82 : 0.48);
+    this.mobileBombButtonBg.setStrokeStyle(4, usable ? 0xf5d0ff : 0x7895a8, usable ? 0.92 : 0.58);
+    this.mobileBombButtonText.setText(`BOMB\n${this.stacks.bomb}`);
+    this.mobileBombButtonText.setColor(usable ? '#ffffff' : '#b9c5cc');
+    this.mobileBombButton.setAlpha(usable ? 1 : 0.64);
   }
 
   private updateAutoplayPlayer(dt: number, speed: number): void {
