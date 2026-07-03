@@ -113,6 +113,7 @@ export class GameScene extends Phaser.Scene {
   private activeBgKey = BIOME_BG_KEYS.shallows;
   private messageText!: Phaser.GameObjects.Text;
   private pauseText!: Phaser.GameObjects.Text;
+  private gameOverButtons: Phaser.GameObjects.GameObject[] = [];
   private mobileBombButton: Phaser.GameObjects.Container | null = null;
   private mobileBombButtonBg: Phaser.GameObjects.Arc | null = null;
   private mobileBombButtonText: Phaser.GameObjects.Text | null = null;
@@ -230,6 +231,11 @@ export class GameScene extends Phaser.Scene {
     this.gameOver = false;
     this.won = false;
     this.pausedByPlayer = false;
+    this.gameOverButtons = [];
+    this.touchActive = false;
+    this.touchPointerId = -1;
+    this.touchTargetX = GAME_W / 2;
+    this.touchTargetY = PLAYER_Y;
     for (const id of Object.keys(this.stacks) as PowerupId[]) this.stacks[id] = id === 'bomb' ? 1 : 0;
     for (const id of Object.keys(this.timed) as PowerupId[]) delete this.timed[id];
     if (savedStacks) {
@@ -1617,6 +1623,10 @@ export class GameScene extends Phaser.Scene {
     this.invuln = 2.2;
     this.spawnBurst(this.player.x, this.player.y, 0xff4d8d, 14);
     this.player.setPosition(GAME_W / 2, PLAYER_Y);
+    this.touchActive = false;
+    this.touchPointerId = -1;
+    this.touchTargetX = this.player.x;
+    this.touchTargetY = this.player.y;
     this.playerBullets.forEachActive((bullet) => this.playerBullets.release(bullet));
     this.enemyBullets.forEachActive((bullet) => this.enemyBullets.release(bullet));
     if (this.lives <= 0) this.showGameOver();
@@ -1624,6 +1634,8 @@ export class GameScene extends Phaser.Scene {
 
   private showGameOver(): void {
     this.gameOver = true;
+    this.touchActive = false;
+    this.touchPointerId = -1;
     this.boss?.warning.destroy();
     this.boss?.destroy();
     this.boss = null;
@@ -1645,12 +1657,41 @@ export class GameScene extends Phaser.Scene {
       loopLevel: this.loopLevel,
       difficulty: 'reef'
     });
-    this.pauseText.setText('CURRENT BROKEN\nENTER  Continue from checkpoint\nSPACE  Main menu');
-    this.keys.ENTER.once('down', () => this.scene.restart({ continueFromSave: true }));
-    this.keys.SPACE.once('down', () => {
-      this.scene.stop('HudScene');
-      this.scene.start('MenuScene');
-    });
+    this.pauseText.setText(this.mobileControls ? 'CURRENT BROKEN' : 'CURRENT BROKEN\nENTER  Continue from checkpoint\nSPACE  Main menu');
+    this.keys.ENTER.once('down', () => this.continueFromGameOver());
+    this.keys.SPACE.once('down', () => this.returnToMenuFromGameOver());
+    this.createGameOverButton(GAME_W / 2, GAME_H / 2 + 76, 'Continue', () => this.continueFromGameOver());
+    this.createGameOverButton(GAME_W / 2, GAME_H / 2 + 144, 'Main Menu', () => this.returnToMenuFromGameOver());
+  }
+
+  private createGameOverButton(x: number, y: number, label: string, onClick: () => void): void {
+    const bg = this.add.rectangle(x, y, 250, 54, 0x09314d, 0.86).setStrokeStyle(3, 0x9bf6ff, 0.9).setDepth(205);
+    const text = this.add
+      .text(x, y, label, {
+        fontFamily: 'Arial Black, Impact, sans-serif',
+        fontSize: '21px',
+        color: '#f8fdff',
+        stroke: '#03192d',
+        strokeThickness: 4
+      })
+      .setOrigin(0.5)
+      .setDepth(206);
+    bg.setInteractive({ useHandCursor: true });
+    bg.on('pointerdown', onClick);
+    text.setInteractive({ useHandCursor: true });
+    text.on('pointerdown', onClick);
+    this.gameOverButtons.push(bg, text);
+  }
+
+  private continueFromGameOver(): void {
+    if (!this.gameOver) return;
+    this.scene.restart({ continueFromSave: true });
+  }
+
+  private returnToMenuFromGameOver(): void {
+    if (!this.gameOver) return;
+    this.scene.stop('HudScene');
+    this.scene.start('MenuScene');
   }
 
   private winGame(): void {
