@@ -1,5 +1,7 @@
 # Brine Hell
 
+Play it here: [https://adamrountrey.github.io/BrineHell/](https://adamrountrey.github.io/BrineHell/)
+
 Brine Hell is a browser-based vertical scrolling bullet hell built with Phaser 3, Vite, and TypeScript. It plays like an underwater 1942-style arcade shooter: pilot a top-down fish through shifting ocean biomes, collect stacking powerups, fight sea-creature waves, defeat bosses, rescue a mermaid, and then survive the twist.
 
 ## Features
