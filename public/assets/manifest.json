@@ -1,0 +1,55 @@
+{
+  "generated": {
+    "oceanBiomes": "assets/generated/ocean-biomes.png"
+  },
+  "scrollingBackgrounds": [
+    "bg-shallows-loop",
+    "bg-coral-loop",
+    "bg-kelp-loop",
+    "bg-bluewater-loop",
+    "bg-trench-loop",
+    "bg-palace-loop"
+  ],
+  "imageGeneratedSprites": [
+    "player-fish",
+    "helper-fish",
+    "enemy-smallFish",
+    "enemy-crab",
+    "enemy-shrimp",
+    "enemy-clam",
+    "enemy-urchin",
+    "enemy-shark",
+    "enemy-jellyfish",
+    "enemy-eel",
+    "enemy-angler",
+    "enemy-shell",
+    "boss-turtle",
+    "boss-octopus",
+    "boss-eelQueen",
+    "boss-leviathan",
+    "boss-anglerKing",
+    "boss-mermaidRescue",
+    "boss-abyssMermaid",
+    "power-pearl",
+    "power-bubble",
+    "power-shield",
+    "power-magnet",
+    "power-bomb",
+    "power-life"
+  ],
+  "projectileSprites": [
+    "player-shot",
+    "enemy-shot",
+    "boss-shot",
+    "pearl-shot",
+    "bubble-shot"
+  ],
+  "runtimeTextures": [
+    "pickup",
+    "shield-ring"
+  ],
+  "audio": {
+    "reggaeMidi": "assets/audio/reggae-loop.mid",
+    "note": "The browser game plays a Web Audio synth version of this reggae MIDI-style loop for reliable playback."
+  }
+}

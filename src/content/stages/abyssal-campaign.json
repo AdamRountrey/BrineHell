@@ -1,0 +1,56 @@
+{
+  "id": "abyssal-campaign",
+  "name": "The Drowned Current",
+  "duration": 390,
+  "biomes": [
+    { "at": 0, "id": "shallows", "name": "Sandy Shallows", "tint": 16770372 },
+    { "at": 48, "id": "coral", "name": "Coral Reef", "tint": 16751472 },
+    { "at": 108, "id": "kelp", "name": "Kelp Forest", "tint": 8501394 },
+    { "at": 168, "id": "bluewater", "name": "Open Blue", "tint": 7772159 },
+    { "at": 228, "id": "trench", "name": "Deep Trench", "tint": 4475135 },
+    { "at": 300, "id": "palace", "name": "Abyss Palace", "tint": 7536895 }
+  ],
+  "checkpoints": [
+    { "at": 0, "id": "start", "name": "Current Mouth" },
+    { "at": 48, "id": "coral", "name": "Coral Gate" },
+    { "at": 108, "id": "kelp", "name": "Kelp Shadow" },
+    { "at": 168, "id": "bluewater", "name": "Open Blue" },
+    { "at": 228, "id": "trench", "name": "Trench Lip" },
+    { "at": 300, "id": "palace", "name": "Abyss Palace" }
+  ],
+  "waves": [
+    { "at": 3, "enemy": "smallFish", "count": 10, "interval": 0.16, "lane": "spread" },
+    { "at": 8, "enemy": "shrimp", "count": 7, "interval": 0.28, "lane": "left" },
+    { "at": 13, "enemy": "crab", "count": 5, "interval": 0.42, "lane": "right" },
+    { "at": 19, "enemy": "clam", "count": 4, "interval": 0.55, "lane": "center" },
+    { "at": 27, "enemy": "urchin", "count": 6, "interval": 0.45, "lane": "spread" },
+    { "at": 53, "enemy": "smallFish", "count": 14, "interval": 0.12, "lane": "spread" },
+    { "at": 59, "enemy": "jellyfish", "count": 7, "interval": 0.34, "lane": "random" },
+    { "at": 66, "enemy": "shark", "count": 4, "interval": 0.65, "lane": "spread" },
+    { "at": 75, "enemy": "clam", "count": 5, "interval": 0.48, "lane": "left" },
+    { "at": 84, "enemy": "urchin", "count": 7, "interval": 0.36, "lane": "right" },
+    { "at": 114, "enemy": "eel", "count": 8, "interval": 0.32, "lane": "spread" },
+    { "at": 122, "enemy": "shrimp", "count": 10, "interval": 0.2, "lane": "random" },
+    { "at": 130, "enemy": "jellyfish", "count": 8, "interval": 0.3, "lane": "center" },
+    { "at": 140, "enemy": "shell", "count": 4, "interval": 0.52, "lane": "spread" },
+    { "at": 174, "enemy": "shark", "count": 6, "interval": 0.5, "lane": "spread" },
+    { "at": 183, "enemy": "smallFish", "count": 18, "interval": 0.09, "lane": "random" },
+    { "at": 192, "enemy": "eel", "count": 8, "interval": 0.28, "lane": "left" },
+    { "at": 203, "enemy": "angler", "count": 4, "interval": 0.7, "lane": "right" },
+    { "at": 234, "enemy": "angler", "count": 7, "interval": 0.42, "lane": "spread" },
+    { "at": 243, "enemy": "shell", "count": 6, "interval": 0.46, "lane": "center" },
+    { "at": 253, "enemy": "jellyfish", "count": 12, "interval": 0.2, "lane": "random" },
+    { "at": 264, "enemy": "shark", "count": 5, "interval": 0.5, "lane": "spread" },
+    { "at": 306, "enemy": "shell", "count": 8, "interval": 0.4, "lane": "spread" },
+    { "at": 315, "enemy": "angler", "count": 8, "interval": 0.36, "lane": "random" },
+    { "at": 324, "enemy": "eel", "count": 10, "interval": 0.24, "lane": "spread" }
+  ],
+  "bosses": [
+    { "at": 36, "boss": "turtle", "checkpoint": "start" },
+    { "at": 96, "boss": "octopus", "checkpoint": "coral" },
+    { "at": 156, "boss": "eelQueen", "checkpoint": "kelp" },
+    { "at": 216, "boss": "leviathan", "checkpoint": "bluewater" },
+    { "at": 282, "boss": "anglerKing", "checkpoint": "trench" },
+    { "at": 342, "boss": "mermaidRescue", "checkpoint": "palace" }
+  ]
+}

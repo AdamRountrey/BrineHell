@@ -1,0 +1,82 @@
+[
+  {
+    "id": "spread",
+    "name": "Fan Coral Spread",
+    "duration": 0,
+    "stackLimit": 4,
+    "rarity": 1,
+    "description": "Adds side shots."
+  },
+  {
+    "id": "pearl",
+    "name": "Piercing Pearl",
+    "duration": 0,
+    "stackLimit": 3,
+    "rarity": 0.8,
+    "description": "Adds piercing pearl shots."
+  },
+  {
+    "id": "bubble",
+    "name": "Bubble Stream",
+    "duration": 0,
+    "stackLimit": 3,
+    "rarity": 0.8,
+    "description": "Adds rapid bubble projectiles."
+  },
+  {
+    "id": "helper",
+    "name": "Pilot Fish",
+    "duration": 0,
+    "stackLimit": 2,
+    "rarity": 0.55,
+    "description": "Adds orbiting helper fish."
+  },
+  {
+    "id": "shield",
+    "name": "Shell Shield",
+    "duration": 12,
+    "stackLimit": 1,
+    "rarity": 0.7,
+    "description": "Blocks a hit."
+  },
+  {
+    "id": "magnet",
+    "name": "Current Magnet",
+    "duration": 18,
+    "stackLimit": 1,
+    "rarity": 0.7,
+    "description": "Pulls pickups toward the player."
+  },
+  {
+    "id": "bomb",
+    "name": "Whirlpool Bomb",
+    "duration": 0,
+    "stackLimit": 3,
+    "rarity": 0.45,
+    "description": "Clears enemy bullets and damages everything."
+  },
+  {
+    "id": "speed",
+    "name": "Sailfin Burst",
+    "duration": 16,
+    "stackLimit": 2,
+    "rarity": 0.8,
+    "description": "Improves movement speed."
+  },
+  {
+    "id": "life",
+    "name": "Heart Current",
+    "duration": 0,
+    "stackLimit": 99,
+    "rarity": 0.25,
+    "description": "Grants an extra life."
+  },
+  {
+    "id": "shark",
+    "name": "Reef Ally",
+    "duration": 5,
+    "stackLimit": 1,
+    "rarity": 0.22,
+    "description": "Calls a friendly shark to eat baddies for five seconds."
+  }
+]

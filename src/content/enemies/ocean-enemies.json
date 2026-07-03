@@ -1,0 +1,122 @@
+[
+  {
+    "id": "smallFish",
+    "name": "Needlefish Swarm",
+    "hp": 2,
+    "speed": 138,
+    "radius": 18,
+    "score": 90,
+    "movement": "sine",
+    "projectile": "none",
+    "fireRate": 0,
+    "dropTable": [{ "id": "spread", "chance": 0.05 }, { "id": "bubble", "chance": 0.04 }]
+  },
+  {
+    "id": "crab",
+    "name": "Pincer Crab",
+    "hp": 5,
+    "speed": 92,
+    "radius": 24,
+    "score": 180,
+    "movement": "zigzag",
+    "projectile": "aimed",
+    "fireRate": 1.8,
+    "dropTable": [{ "id": "shield", "chance": 0.07 }, { "id": "pearl", "chance": 0.04 }]
+  },
+  {
+    "id": "shrimp",
+    "name": "Snap Shrimp",
+    "hp": 3,
+    "speed": 190,
+    "radius": 18,
+    "score": 120,
+    "movement": "dash",
+    "projectile": "spray",
+    "fireRate": 2.1,
+    "dropTable": [{ "id": "speed", "chance": 0.08 }]
+  },
+  {
+    "id": "clam",
+    "name": "Pearl Clam",
+    "hp": 8,
+    "speed": 54,
+    "radius": 26,
+    "score": 240,
+    "movement": "drift",
+    "projectile": "burst",
+    "fireRate": 2.4,
+    "dropTable": [{ "id": "pearl", "chance": 0.12 }]
+  },
+  {
+    "id": "urchin",
+    "name": "Spotted Pufferfish",
+    "hp": 6,
+    "speed": 78,
+    "radius": 24,
+    "score": 210,
+    "movement": "slow",
+    "projectile": "radial",
+    "fireRate": 2.2,
+    "dropTable": [{ "id": "bomb", "chance": 0.05 }]
+  },
+  {
+    "id": "shark",
+    "name": "Reef Shark",
+    "hp": 12,
+    "speed": 154,
+    "radius": 34,
+    "score": 420,
+    "movement": "hunter",
+    "projectile": "aimed",
+    "fireRate": 1.25,
+    "dropTable": [{ "id": "helper", "chance": 0.08 }, { "id": "life", "chance": 0.02 }]
+  },
+  {
+    "id": "jellyfish",
+    "name": "Lantern Jelly",
+    "hp": 7,
+    "speed": 66,
+    "radius": 28,
+    "score": 260,
+    "movement": "float",
+    "projectile": "lace",
+    "fireRate": 1.6,
+    "dropTable": [{ "id": "magnet", "chance": 0.08 }, { "id": "bubble", "chance": 0.07 }]
+  },
+  {
+    "id": "eel",
+    "name": "Ribbon Eel",
+    "hp": 10,
+    "speed": 158,
+    "radius": 26,
+    "score": 360,
+    "movement": "serpent",
+    "projectile": "arc",
+    "fireRate": 1.4,
+    "dropTable": [{ "id": "speed", "chance": 0.07 }, { "id": "spread", "chance": 0.05 }]
+  },
+  {
+    "id": "angler",
+    "name": "Trench Angler",
+    "hp": 14,
+    "speed": 92,
+    "radius": 32,
+    "score": 480,
+    "movement": "stalk",
+    "projectile": "spiral",
+    "fireRate": 1.1,
+    "dropTable": [{ "id": "bomb", "chance": 0.08 }, { "id": "shield", "chance": 0.06 }]
+  },
+  {
+    "id": "shell",
+    "name": "Armored Shell",
+    "hp": 16,
+    "speed": 48,
+    "radius": 30,
+    "score": 520,
+    "movement": "tank",
+    "projectile": "cross",
+    "fireRate": 1.35,
+    "dropTable": [{ "id": "pearl", "chance": 0.08 }, { "id": "life", "chance": 0.025 }]
+  }
+]

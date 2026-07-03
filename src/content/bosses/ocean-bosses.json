@@ -1,0 +1,87 @@
+[
+  {
+    "id": "turtle",
+    "name": "Ancient Reef Turtle",
+    "hp": 260,
+    "radius": 78,
+    "score": 4000,
+    "texture": "boss-turtle",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "wideFan", "fireRate": 0.9, "speed": 42 },
+      { "atHealthPct": 0.55, "pattern": "shellSpiral", "fireRate": 0.55, "speed": 56 }
+    ]
+  },
+  {
+    "id": "octopus",
+    "name": "Coral Octopus",
+    "hp": 360,
+    "radius": 86,
+    "score": 6500,
+    "texture": "boss-octopus",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "tentacleRain", "fireRate": 0.65, "speed": 54 },
+      { "atHealthPct": 0.45, "pattern": "inkSpiral", "fireRate": 0.58, "speed": 62 }
+    ]
+  },
+  {
+    "id": "eelQueen",
+    "name": "Kelp Eel Queen",
+    "hp": 380,
+    "radius": 76,
+    "score": 8000,
+    "texture": "boss-eelQueen",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "serpentArc", "fireRate": 0.62, "speed": 88 },
+      { "atHealthPct": 0.5, "pattern": "lightningWeave", "fireRate": 0.44, "speed": 108 }
+    ]
+  },
+  {
+    "id": "leviathan",
+    "name": "Bluewater Sperm Whale",
+    "hp": 560,
+    "radius": 94,
+    "score": 10000,
+    "texture": "boss-leviathan",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "sharkTeeth", "fireRate": 0.5, "speed": 74 },
+      { "atHealthPct": 0.42, "pattern": "maelstrom", "fireRate": 0.32, "speed": 96 }
+    ]
+  },
+  {
+    "id": "anglerKing",
+    "name": "Trench Angler King",
+    "hp": 660,
+    "radius": 88,
+    "score": 13000,
+    "texture": "boss-anglerKing",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "darkLures", "fireRate": 0.45, "speed": 62 },
+      { "atHealthPct": 0.5, "pattern": "abyssWheel", "fireRate": 0.28, "speed": 84 }
+    ]
+  },
+  {
+    "id": "mermaidRescue",
+    "name": "Bound Mermaid",
+    "hp": 420,
+    "radius": 72,
+    "score": 20000,
+    "texture": "boss-mermaidRescue",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "crystalTears", "fireRate": 0.5, "speed": 54 },
+      { "atHealthPct": 0.35, "pattern": "pleaStorm", "fireRate": 0.3, "speed": 72 }
+    ]
+  },
+  {
+    "id": "abyssMermaid",
+    "name": "The Drowned Crown",
+    "hp": 980,
+    "radius": 108,
+    "score": 50000,
+    "texture": "boss-abyssMermaid",
+    "phases": [
+      { "atHealthPct": 1, "pattern": "royalBloom", "fireRate": 0.42, "speed": 80 },
+      { "atHealthPct": 0.65, "pattern": "crownLattice", "fireRate": 0.28, "speed": 96 },
+      { "atHealthPct": 0.28, "pattern": "finalTide", "fireRate": 0.18, "speed": 116 }
+    ]
+  }
+]
